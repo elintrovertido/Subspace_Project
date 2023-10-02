@@ -1,6 +1,8 @@
 import express from "express";
 import axios from "axios";
 import _ from  "lodash";
+import fs from "fs";
+
 
 // import array from "lodash/array";
 // import object from "lodash/fp/object";
@@ -86,14 +88,34 @@ app.get('/api/blog-stats', async (req, res) => {
         // console.log(noduplicates);
         console.log("count of no duplicates titles " + noduplicates.length);
 
-        res.json({
+        const result = {
             // "Blogs" : blogs,
             "Total number of blogs" : blogs_size,
             "The title of the longest blog" : title,
             "Number of blogs with \"privacy\" in the title" : count,
             "An array of unique blog titles" : noduplicates
+        }
+
+        res.json(result)
+
+        const resultsaved = JSON.stringify(result,null,2)
+        const filepath = "data-stats.json"
+
+        fs.writeFile(filepath,resultsaved,'utf-8',(err)=>{
+            if(err){
+                console.error(err)
+            }else{
+                console.log("saved succesfully")
+            }
         })
-    
+
+
+
+
+
+
+
+
     }
     catch (error) {
         res.send(error);
@@ -135,6 +157,13 @@ app.get("/api/blog-search", async(req,res)=>{
     res.send(data);
 
 })
+
+
+
+
+
+
+
 
 app.listen(port, () => {
     // console.log("hello world ");
