@@ -31,6 +31,7 @@ const response = async (req, res) => {
         }
     }
 }
+
 response();
 
 
@@ -152,12 +153,6 @@ app.get("/api/blog-search", async (req, res) => {
     res.send(data);
 
 })
-
-
-
-
-
-
 
 
 app.listen(port, () => {
